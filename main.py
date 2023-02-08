@@ -23,8 +23,10 @@ with tab1:
     invested_value = sip_amount*months
 
     future_value = sip_amount * ((((1 + monthly_rate)**(months))-1) * (1 + monthly_rate))/monthly_rate
+    future_value = round(future_value)
 
     gain = float(future_value) - float(invested_value)
+    gain = round(gain)
 
     st.subheader(f'Amount Invested: {invested_value}')
     st.subheader(f'Final Amount: {future_value}')
@@ -40,6 +42,7 @@ with tab1:
         invested_value = sip_amount*months
 
         future_value = sip_amount * ((((1 + monthly_rate)**(months))-1) * (1 + monthly_rate))/monthly_rate
+        future_value = round(future_value)
 
         st.subheader(f'After Inflation: {future_value}')
 
