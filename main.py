@@ -55,8 +55,10 @@ with tab2:
     lumpsum_duration = st.number_input('Duration of Investment (in years)',1,99,10)
 
     cagr = lumpsum_amount * (pow((1 + lumpsum_rate_of_return/100),lumpsum_duration))
+    cagr = round(cagr)
     
     lumpsum_gain = float(cagr) - float(lumpsum_amount)
+    lumpsum_gain = round(lumpsum_gain)
 
     st.subheader(f'Amount Invested: {lumpsum_amount}')
     st.subheader(f'Final Amount: {cagr}')
@@ -66,6 +68,7 @@ with tab2:
     
     if st.checkbox('Adjust Investment for Inflation ? (Assumed annual inflation rate is 6%)',False) == True:
         lumpsum_present_value = cagr / (pow(1.06,duration))
+        lumpsum_present_value = round(lumpsum_present_value)
         
         st.subheader(f'After Inflation: {lumpsum_present_value}')
 
