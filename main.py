@@ -14,7 +14,8 @@ with tab1:
 
     # input SIP amount, expected rate of return & duration of investment
     sip_amount = st.number_input('SIP Amount',100,100000,1000)
-    rate_of_return = st.number_input('Expected Rate of Return (in %)',0.0,100.0,12.0,0.01)
+    #rate_of_return = st.number_input('Expected Rate of Return (in %)',0.0,100.0,12.0,0.01)
+    rate_of_return = st.slider('Expected Rate of Return (in %)',1,30,12)
     duration = st.number_input('Duration of Investment (in years)',1,100,10)
 
     st.markdown('##')
@@ -33,7 +34,7 @@ with tab1:
         future_value = sip_amount * ((((1 + monthly_rate)**(months))-1) * (1 + monthly_rate))/monthly_rate
         future_value_inwords = babel.numbers.format_currency(future_value,'INR',locale='en_IN')
 
-        gain = float(future_value) - float(invested_value)
+        gain = round(float(future_value) - float(invested_value),2)
         gain_inwords = babel.numbers.format_currency(gain,'INR',locale='en_IN')
 
         st.subheader(f'Amount Invested: {invested_value_inwords}')
@@ -42,7 +43,7 @@ with tab1:
 
         # plot pie chart
         fig = go.Figure(data=[go.Pie(labels=['Investment','Gain'], values=[invested_value,gain])])
-        fig.update_traces(hoverinfo='value', textinfo='label+percent', textfont_size=15,marker=dict(colors=['green','red'], line=dict(color='#000000', width=2)))
+        fig.update_traces(hoverinfo='value', textinfo='label+value', textfont_size=15,marker=dict(colors=['green','red'], line=dict(color='#000000', width=2)))
         st.plotly_chart(fig)
 
     elif checkbox == True:
@@ -56,15 +57,15 @@ with tab1:
         future_value = sip_amount * ((((1 + monthly_rate)**(months))-1) * (1 + monthly_rate))/monthly_rate
         future_value_inwords = babel.numbers.format_currency(future_value,'INR',locale='en_IN')
 
-        gain_after_inflation = float(future_value) - float(invested_value)
+        gain_after_inflation = round(float(future_value) - float(invested_value),2)
         gain_after_inflation_inwords = babel.numbers.format_currency(gain_after_inflation,'INR',locale='en_IN')
 
         st.subheader(f'Amount Invested: {invested_value_inwords}')
-        st.subheader(f'After Inflation: {future_value_inwords}')
+        st.subheader(f'Final Amount: {future_value_inwords}')
         st.subheader(f'Gain: {gain_after_inflation_inwords}')
 
         fig = go.Figure(data=[go.Pie(labels=['Investment','Gain'], values=[invested_value,gain_after_inflation])])
-        fig.update_traces(hoverinfo='value', textinfo='label+percent', textfont_size=15,marker=dict(colors=['green','red'], line=dict(color='#000000', width=2)))
+        fig.update_traces(hoverinfo='value', textinfo='label+value', textfont_size=15,marker=dict(colors=['green','red'], line=dict(color='#000000', width=2)))
         st.plotly_chart(fig)
 
     st.subheader('About SIP & SIP Calculator')
@@ -81,7 +82,8 @@ with tab2:
     lumpsum_amount = st.number_input('Investment Amount',100,9999999999,1000)
     lumpsum_amount_inwords = babel.numbers.format_currency(lumpsum_amount,'INR',locale='en_IN')
 
-    lumpsum_rate_of_return = st.number_input('Expected Rate of Return (in %)',1.00,100.0,12.0,0.01)
+    #lumpsum_rate_of_return = st.number_input('Expected Rate of Return (in %)',1.00,100.0,12.0,0.01)
+    lumpsum_rate_of_return = st.slider('Expected Rate of Return (in %) ',1,30,12)
     lumpsum_duration = st.number_input('Duration of Investment (in years)',1,99,10)
 
     cagr = lumpsum_amount * (pow((1 + lumpsum_rate_of_return/100),lumpsum_duration))
@@ -92,7 +94,7 @@ with tab2:
     
     if lumpsum_checkbox == False:
         
-        lumpsum_gain = float(cagr) - float(lumpsum_amount)
+        lumpsum_gain = round(float(cagr) - float(lumpsum_amount),2)
         lumpsum_gain_inwords = babel.numbers.format_currency(lumpsum_gain,'INR',locale='en_IN')
 
         st.subheader(f'Amount Invested: {lumpsum_amount_inwords}')
@@ -101,23 +103,23 @@ with tab2:
 
         # plot pie chart
         fig = go.Figure(data=[go.Pie(labels=['Investment','Gain'], values=[lumpsum_amount,lumpsum_gain])])
-        fig.update_traces(hoverinfo='value', textinfo='label+percent', textfont_size=15,marker=dict(colors=['green','red'], line=dict(color='#000000', width=2)))
+        fig.update_traces(hoverinfo='value', textinfo='label+value', textfont_size=15,marker=dict(colors=['green','red'], line=dict(color='#000000', width=2)))
         st.plotly_chart(fig)
     
     if lumpsum_checkbox == True:
         cagr_after_inflation = lumpsum_amount * (pow((1 + (lumpsum_rate_of_return-6)/100),lumpsum_duration))
         cagr_after_inflation_inwords = babel.numbers.format_currency(cagr_after_inflation,'INR',locale='en_IN')
         
-        lumpsum_gain_after_inflation = float(cagr_after_inflation) - float(lumpsum_amount)
+        lumpsum_gain_after_inflation = round(float(cagr_after_inflation) - float(lumpsum_amount),2)
         lumpsum_gain_after_inflation_inwords = babel.numbers.format_currency(lumpsum_gain_after_inflation,'INR',locale='en_IN')
 
         st.subheader(f'Amount Invested: {lumpsum_amount_inwords}')
-        st.subheader(f'After Inflation: {cagr_after_inflation_inwords}')
+        st.subheader(f'Final Amount: {cagr_after_inflation_inwords}')
         st.subheader(f'Gain: {lumpsum_gain_after_inflation_inwords}')
 
         # plot pie chart
         fig = go.Figure(data=[go.Pie(labels=['Investment','Gain'], values=[lumpsum_amount,lumpsum_gain_after_inflation])])
-        fig.update_traces(hoverinfo='value', textinfo='label+percent', textfont_size=15,marker=dict(colors=['green','red'], line=dict(color='#000000', width=2)))
+        fig.update_traces(hoverinfo='value', textinfo='label+value', textfont_size=15,marker=dict(colors=['green','red'], line=dict(color='#000000', width=2)))
         st.plotly_chart(fig)
 
 
