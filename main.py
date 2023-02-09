@@ -93,3 +93,7 @@ hide_st_style = """
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
+
+import babel.numbers
+new = babel.numbers.format_currency(future_value,'INR',locale='en_IN')
+st.subheader(new)
