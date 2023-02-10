@@ -12,7 +12,7 @@ tab1, tab2, tab3, tab4 = st.tabs(tabs=['SIP Calculator', 'Lumpsump Investment Ca
 
 # with tab 1
 with tab1:
-
+    
     # input SIP amount, expected rate of return & duration of investment
     sip_amount = st.number_input('SIP Amount',100,100000,1000)
     #rate_of_return = st.number_input('Expected Rate of Return (in %)',0.0,100.0,12.0,0.01)
@@ -25,7 +25,7 @@ with tab1:
 
     # if inflation checkbox if off
     if checkbox == False:
-
+        
         monthly_rate = rate_of_return/12/100
         months = duration * 12
         
@@ -48,26 +48,29 @@ with tab1:
         st.plotly_chart(fig)
 
     elif checkbox == True:
-
-        monthly_rate = (rate_of_return-6)/12/100
-        months = duration * 12
         
-        invested_value = sip_amount*months
-        invested_value_inwords = babel.numbers.format_currency(sip_amount*months,'INR',locale='en_IN')
+        try:
+            monthly_rate = (rate_of_return-6)/12/100
+            months = duration * 12
+            
+            invested_value = sip_amount*months
+            invested_value_inwords = babel.numbers.format_currency(sip_amount*months,'INR',locale='en_IN')
 
-        future_value = sip_amount * ((((1 + monthly_rate)**(months))-1) * (1 + monthly_rate))/monthly_rate
-        future_value_inwords = babel.numbers.format_currency(future_value,'INR',locale='en_IN')
+            future_value = sip_amount * ((((1 + monthly_rate)**(months))-1) * (1 + monthly_rate))/monthly_rate
+            future_value_inwords = babel.numbers.format_currency(future_value,'INR',locale='en_IN')
 
-        gain_after_inflation = round(float(future_value) - float(invested_value),2)
-        gain_after_inflation_inwords = babel.numbers.format_currency(gain_after_inflation,'INR',locale='en_IN')
+            gain_after_inflation = round(float(future_value) - float(invested_value),2)
+            gain_after_inflation_inwords = babel.numbers.format_currency(gain_after_inflation,'INR',locale='en_IN')
 
-        st.subheader(f'Amount Invested: {invested_value_inwords}')
-        st.subheader(f'Final Amount: {future_value_inwords}')
-        st.subheader(f'Gain: {gain_after_inflation_inwords}')
+            st.subheader(f'Amount Invested: {invested_value_inwords}')
+            st.subheader(f'Final Amount: {future_value_inwords}')
+            st.subheader(f'Gain: {gain_after_inflation_inwords}')
 
-        fig = go.Figure(data=[go.Pie(labels=['Investment','Gain'], values=[invested_value,gain_after_inflation])])
-        fig.update_traces(hoverinfo='value', textinfo='label+value', textfont_size=15,marker=dict(colors=['green','red'], line=dict(color='#000000', width=2)))
-        st.plotly_chart(fig)
+            fig = go.Figure(data=[go.Pie(labels=['Investment','Gain'], values=[invested_value,gain_after_inflation])])
+            fig.update_traces(hoverinfo='value', textinfo='label+value', textfont_size=15,marker=dict(colors=['green','red'], line=dict(color='#000000', width=2)))
+            st.plotly_chart(fig)
+        except Exception as e:
+            st.warning('Please change the expcted rate of return')
 
     st.subheader('About SIP & SIP Calculator')
     st.write('''
