@@ -5,6 +5,7 @@ import plotly.graph_objects as go
 
 # set page config
 st.set_page_config( 'Mutual Fund Calculator',page_icon=':bar_chart:',layout='centered')
+st.write('Phone users: swipe on tabs to see all options.')
 
 # set tabs
 tab1, tab2, tab3, tab4 = st.tabs(tabs=['SIP Calculator', 'Lumpsump Investment Calculator','Quick Tools','MF Guide'])
