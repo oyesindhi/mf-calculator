@@ -7,5 +7,7 @@ This Mutual Fund Calculator is a tool designed to help users estimate their pote
 # Features
 
 **Investment Projection**: Get an estimate of your future wealth based on your investment amount and expected returns.
+
 **SIP (Systematic Investment Plan) Calculator**: Calculate the potential returns and future value of your SIP investments.
+
 **Lump Sum Calculator**: Determine the future value of your one-time lump sum investment.
